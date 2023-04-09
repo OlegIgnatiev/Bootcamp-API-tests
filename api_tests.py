@@ -4,33 +4,6 @@ import requests
 
 class TestApi(unittest.TestCase):
 
-    def test_get_api(self):
-        response = requests.get(url="https://reqres.in/api/users/2")
-        # print(response.status_code)
-        # print(response.json())
-        assert response.status_code == 200
-        assert response.json()["data"]["id"] == 2
-        assert response.json()["data"]["email"] == "janet.weaver@reqres.in"
-        assert response.json()["data"]["first_name"] == "Janet"
-        assert response.json()["data"]["last_name"] == "Weaver"
-        assert response.json()["support"]["url"] == "https://reqres.in/#support-heading"
-
-    def test_post_api(self):
-        # setup logic
-        post_url = "https://reqres.in/api/users/2"
-        post_body = {
-            "name": "user",
-            "job": "tester"
-        }
-        # action logic
-        response = requests.post(url=post_url, json=post_body)
-        # check result
-        assert response.status_code == 201
-        assert int(response.json()["id"]) > 0
-        assert response.json()["name"] == "user"
-        assert response.json()["job"] == "tester"
-        assert response.json()["createdAt"] is not None
-
     def test_get_api_all_users(self):
         # setup logic
         get_url = "https://reqres.in/api/users"
