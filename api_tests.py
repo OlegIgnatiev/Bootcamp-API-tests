@@ -10,8 +10,9 @@ class TestApi(unittest.TestCase):
         # action logic
         response = requests.get(url=get_url)
         # check result
-        print(response.status_code)
-        print(response.json())
+        self.assertTrue(response.status_code == 200)
+        # print(response.status_code)
+        # print(response.json())
 
     def test_get_api_single_user(self):
         # setup logic
@@ -19,13 +20,18 @@ class TestApi(unittest.TestCase):
         # action logic
         response = requests.get(url=post_url)
         # check result
-        print(response.status_code)
-        print(response.json())
-        assert response.json()["data"]["id"] == 2
-        assert response.json()["data"]["email"] == "janet.weaver@reqres.in"
-        assert response.json()["data"]["first_name"] == "Janet"
-        assert response.json()["data"]["last_name"] == "Weaver"
-        assert response.json()["support"]["text"] == "To keep ReqRes free, contributions towards server costs are appreciated!"
+        # print(response.status_code)
+        # print(response.json())
+        # assert response.json()["data"]["id"] == 2
+        # assert response.json()["data"]["email"] == "janet.weaver@reqres.in"
+        # assert response.json()["data"]["first_name"] == "Janet"
+        # assert response.json()["data"]["last_name"] == "Weaver"
+        # assert response.json()["support"]["text"] == "To keep ReqRes free, contributions towards server costs are appreciated!"
+        self.assertTrue(response.json()["data"]["id"] == 2)
+        self.assertTrue(response.json()["data"]["email"] == "janet.weaver@reqres.in")
+        self.assertTrue(response.json()["data"]["first_name"] == "Janet")
+        self.assertTrue(response.json()["data"]["last_name"] == "Weaver")
+        self.assertTrue(response.json()["support"]["text"] == "To keep ReqRes free, contributions towards server costs are appreciated!")
 
     def test_post_api_create_user(self):
         # setup logic
@@ -37,11 +43,16 @@ class TestApi(unittest.TestCase):
         # action logic
         response = requests.post(url=post_url, json=post_body)
         # check result
-        assert response.status_code == 201
-        assert int(response.json()["id"]) > 0
-        assert response.json()["name"] == "new user"
-        assert response.json()["job"] == "new job"
-        assert response.json()["createdAt"] is not None
+        # assert response.status_code == 201
+        # assert int(response.json()["id"]) > 0
+        # assert response.json()["name"] == "new user"
+        # assert response.json()["job"] == "new job"
+        # assert response.json()["createdAt"] is not None
+        self.assertTrue(response.status_code == 201)
+        self.assertTrue(int(response.json()["id"]) > 0)
+        self.assertTrue(response.json()["name"] == "new user")
+        self.assertTrue(response.json()["job"] == "new job")
+        self.assertTrue(response.json()["createdAt"] is not None)
 
     def test_put_api_update_user(self):
         # setup logic
@@ -52,7 +63,8 @@ class TestApi(unittest.TestCase):
         # action logic
         response = requests.put(url=put_url, json=put_body)
         # check result
-        assert response.json()["first_name"] == "Green"
+        # assert response.json()["first_name"] == "Green"
+        self.assertTrue(response.json()["first_name"] == "Green")
 
     def test_delete_api_delete_user(self):
         # setup logic
@@ -61,7 +73,8 @@ class TestApi(unittest.TestCase):
         response = requests.delete(url=delete_url)
         # check result
         # print(response.status_code)
-        assert response.status_code == 204
+        # assert response.status_code == 204
+        self.assertTrue(response.status_code == 204)
 
     def test_post_api_register_successful(self):
         # setup logic
@@ -73,8 +86,11 @@ class TestApi(unittest.TestCase):
         # action logic
         response = requests.post(url=post_url, json=post_json)
         # check result
-        print(response.status_code)
-        print(response.json())
+        # print(response.status_code)
+        # print(response.json())
+        self.assertTrue(response.status_code == 200)
+        self.assertTrue(response.json()['id'] == 4)
+        self.assertTrue(response.json()['token'] == 'QpwL5tke4Pnpja7X4')
 
     def test_post_api_register_unsuccessful_1(self):
         # setup logic
@@ -86,8 +102,10 @@ class TestApi(unittest.TestCase):
         # action logic
         response = requests.post(url=post_url, json=post_json)
         # check result
-        assert response.status_code == 400
-        assert response.json() == {'error': 'Note: Only defined users succeed registration'}
+        # assert response.status_code == 400
+        # assert response.json() == {'error': 'Note: Only defined users succeed registration'}
+        self.assertTrue(response.status_code == 400)
+        self.assertTrue(response.json() == {'error': 'Note: Only defined users succeed registration'})
 
     def test_post_api_register_unsuccessful_2(self):
         # setup logic
@@ -99,8 +117,10 @@ class TestApi(unittest.TestCase):
         # action logic
         response = requests.post(url=post_url, json=post_json)
         # check logic
-        assert response.status_code == 400
-        assert response.json() == {'error': 'Missing email or username'}
+        # assert response.status_code == 400
+        # assert response.json() == {'error': 'Missing email or username'}
+        self.assertTrue(response.status_code == 400)
+        self.assertTrue(response.json() == {'error': 'Missing email or username'})
 
     def test_get_api_delayed_response(self):
         # setup logic
